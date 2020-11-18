@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { GENDER, SPECIES } from "./Constants/constants";
 import { getGenderVillagers, getSpeciesVillagers } from './Data/fetchData';
+// import { Button } from 'react-native-elements';
+import { AddVillager } from './Components/AddVillager';
 
 export default function App() {
   const [villagerData, setVillagerData] = useState([]);
@@ -16,13 +18,10 @@ export default function App() {
     fetchVillagersData();
   });
 
-  // I  am looking for judy
-  let data = getGenderVillagers(villagerData, GENDER.female);
-  let displayData = getSpeciesVillagers(data, SPECIES.cub);
-
   return (
     <View style={styles.container}>
       <Text>This is my AC app!</Text>
+      <AddVillager villagerData={villagerData}/>
     </View>
   );
 }
