@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Button, Overlay } from 'react-native-elements';
 import { getSpeciesList, getVillagers } from "../Data/fetchData";
 import { GENDER } from "../Constants/constants";
+import { storeVillager } from "../Data/storage";
 
 export const AddVillager = (props) => {
     const [visible, setVisible] = useState(false);
@@ -12,9 +13,19 @@ export const AddVillager = (props) => {
     const [finalResults, setFinalResults] = useState("");
 
     const [villagerGender, setVillagerGender] = useState("");
+    const [villagerSpecies, setVillagerSpecies] = useState("");
 
     const toggleOverlay = () => {
         setVisible(!visible);
+    };
+
+    const resetQuestions = () => {
+        setSelectGender(true);
+        setSelectSpecies(false);
+        setShowResults(false);
+        setFinalResults("");
+        setVillagerGender("");
+        setVillagerSpecies("");
     };
 
     const setGender = (gender) => {
@@ -32,6 +43,7 @@ export const AddVillager = (props) => {
     );
 
     const setSpecies = (species) => {
+        setVillagerSpecies(species);
         setFinalResults(getVillagers(props.villagerData, villagerGender, species));
         setSelectSpecies(false);
         setShowResults(true);
@@ -48,8 +60,15 @@ export const AddVillager = (props) => {
         </Text>
     );
 
+    const setVillager = (name) => {
+        const villager = {name: name, gender: villagerGender, species: villagerSpecies};
+        storeVillager(villager).then();
+        setShowResults(false);
+        resetQuestions();
+    };
+
     const villagerButtons = finalResults && (finalResults.map(villager => (
-        <Button key={villager.id} title={villager.name["name-USen"]} type="clear"/>
+        <Button key={villager.id} title={villager.name["name-USen"]} type="clear" onPress={() => setVillager(villager.name["name-USen"])}/>
     )));
 
     const results = showResults && (
@@ -62,7 +81,7 @@ export const AddVillager = (props) => {
     return (
         <View>
             <Button title="Add Villager..." type="clear" onPress={toggleOverlay} />
-            <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
+            <Overlay isVisible={visible} onBackdropPress={() => {toggleOverlay(); resetQuestions()}}>
                 <Text style={styles.container}>
                     {gender}
                     {species}

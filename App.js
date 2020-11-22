@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { GENDER, SPECIES } from "./Constants/constants";
-import { getGenderVillagers, getSpeciesVillagers } from './Data/fetchData';
 // import { Button } from 'react-native-elements';
 import { AddVillager } from './Components/AddVillager';
+import { VillagerDisplay } from "./Components/VillagerDisplay";
 
 export default function App() {
   const [villagerData, setVillagerData] = useState([]);
@@ -20,7 +19,8 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text>This is my AC app!</Text>
+      <Text>This is my AC app! hi</Text>
+      <VillagerDisplay/>
       <AddVillager villagerData={villagerData}/>
     </View>
   );
