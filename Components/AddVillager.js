@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Button, Overlay } from 'react-native-elements';
+import { Button, Overlay, Icon } from 'react-native-elements';
 import { getSpeciesList, getVillagers } from "../Data/fetchData";
 import { GENDER } from "../Constants/constants";
 import { storeVillager } from "../Data/storage";
@@ -80,7 +80,7 @@ export const AddVillager = (props) => {
 
     return (
         <View>
-            <Button title="Add Villager..." type="clear" onPress={toggleOverlay} />
+            <Icon raised name='add' color='#9ae3b4' style={styles.addButton} onPress={toggleOverlay} />
             <Overlay isVisible={visible} onBackdropPress={() => {toggleOverlay(); resetQuestions()}}>
                 <Text style={styles.container}>
                     {gender}
@@ -100,4 +100,8 @@ const styles = StyleSheet.create({
         width: 300,
         height: 600
     },
+    addButton: {
+        position: 'absolute',
+        zIndex: 1,
+    }
 });

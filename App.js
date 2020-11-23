@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-// import { Button } from 'react-native-elements';
 import { AddVillager } from './Components/AddVillager';
 import { VillagerDisplay } from "./Components/VillagerDisplay";
 
@@ -19,7 +18,6 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text>This is my AC app! hi</Text>
       <VillagerDisplay/>
       <AddVillager villagerData={villagerData}/>
     </View>
@@ -29,7 +27,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#9ae3b4',
     alignItems: 'center',
     justifyContent: 'center',
   },
