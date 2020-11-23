@@ -14,15 +14,15 @@ export const VillagerDisplay = () => {
         fetchStoredVillagers();
     }, [villagerList]);
 
-    const displayVillager = villagerList && (
-        <Text>
+    const displayVillager = villagerList ? (
+        <View>
             {villagerList.map(villager =>
                 <Text style={styles.container}>
                     {villager.name}
                 </Text>
             )}
-        </Text>
-    );
+        </View>
+    ) : <Text/>;
 
     return (
         <View>
