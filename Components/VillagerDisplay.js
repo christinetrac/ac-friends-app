@@ -17,7 +17,7 @@ export const VillagerDisplay = () => {
     const displayVillager = villagerList ? (
         <View>
             {villagerList.map(villager =>
-                <Text style={styles.container}>
+                <Text style={styles.container} key={villager.id}>
                     {villager.name}
                 </Text>
             )}

@@ -60,15 +60,18 @@ export const AddVillager = (props) => {
         </Text>
     );
 
-    const setVillager = (name) => {
-        const villager = {name: name, gender: villagerGender, species: villagerSpecies};
-        storeVillager(villager).then();
+    const setVillager = (villager) => {
+        const newVillager = {id: villager.id, name: villager.name["name-USen"],
+                            gender: villagerGender, species: villagerSpecies,
+                            image: villager["image_uri"], icon: villager["icon_uri"],
+                            colour: villager["bubble-color"], birthday: villager["birthday-string"]};
+        storeVillager(newVillager).then();
         setShowResults(false);
         resetQuestions();
     };
 
     const villagerButtons = finalResults && (finalResults.map(villager => (
-        <Button key={villager.id} title={villager.name["name-USen"]} type="clear" onPress={() => setVillager(villager.name["name-USen"])}/>
+        <Button key={villager.id} title={villager.name["name-USen"]} type="clear" onPress={() => setVillager(villager)}/>
     )));
 
     const results = showResults && (
