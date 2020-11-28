@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableHighlight, Modal } from 'react-native';
-import { Button, Icon } from 'react-native-elements';
+import { StyleSheet, Text, View, Modal, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { Button, Icon, Divider } from 'react-native-elements';
 import { getSpeciesList, getVillagers } from "../Data/fetchData";
 import { GENDER } from "../Constants/constants";
 import { storeVillager } from "../Data/storage";
@@ -28,19 +28,33 @@ export const AddVillager = (props) => {
         setVillagerSpecies("");
     };
 
+    // GENDER SELECTIONS //
+
     const setGender = (gender) => {
         setVillagerGender(gender);
         setSelectGender(false);
         setSelectSpecies(true);
     };
 
+    const girl = "girl";
     const gender = selectGender ? (
         <View>
-            <Text>Is your villager a girl or boy?</Text>
-            <Button title="Girl" type="clear" onPress={() => setGender(GENDER.female)}/>
-            <Button title="Boy" type="clear" onPress={() => setGender(GENDER.male)}/>
+            <Text style={styles.questionText}>Select a Gender</Text>
+            <Divider style={{ backgroundColor: '#E6D2C1', height: 3 }} />
+            <View style={styles.questionOptions}>
+                <TouchableOpacity style={styles.questionOption} onPress={() => setGender(GENDER.female)}>
+                    <Image source={require(`../Images/Gender/${girl}.png`)} style={styles.genderImg}/>
+                    <Text style={styles.questionOptionsLabel}>Girl</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.questionOption} onPress={() => setGender(GENDER.male)}>
+                    <Image source={require('../Images/Gender/boy.png')} style={styles.genderImg}/>
+                    <Text style={styles.questionOptionsLabel}>Boy</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     ) : <View/>;
+
+    // SPECIES SELECTION //
 
     const setSpecies = (species) => {
         setVillagerSpecies(species);
@@ -50,15 +64,23 @@ export const AddVillager = (props) => {
     };
 
     const speciesButtons = getSpeciesList().map(species => (
-        <Button key={species} title={species} type="clear" onPress={() => setSpecies(species)}/>
+        <TouchableOpacity onPress={() => setSpecies(species)} key={species}>
+            <Image source={require(`../Images/Species/Cat.png`)} style={styles.genderImg}/>
+            <Text style={styles.questionOptionsLabel}>{species}</Text>
+        </TouchableOpacity>
     ));
 
     const species = selectSpecies ? (
-        <Text>
-            <Text>What is the species of your villager?</Text>
-            {speciesButtons}
-        </Text>
+        <View>
+            <Text style={styles.questionText}>Select a Species</Text>
+            <Divider style={{ backgroundColor: '#E6D2C1', height: 3 }} />
+            <ScrollView showsVerticalScrollIndicator={false}>
+                {speciesButtons}
+            </ScrollView>
+        </View>
     ) : <View/>;
+
+    // VILLAGER SELECTION //
 
     const setVillager = (villager) => {
         const newVillager = {id: villager.id, name: villager.name["name-USen"],
@@ -76,8 +98,10 @@ export const AddVillager = (props) => {
 
     const results = showResults ? (
         <View>
-            <Text>Which one is your villager?</Text>
-            {villagerButtons}
+            <Text style={styles.questionText}>Select a Villager</Text>
+            <View style={styles.speciesContainer}>
+                {villagerButtons}
+            </View>
         </View>
     ) : <View/>;
 
@@ -92,10 +116,10 @@ export const AddVillager = (props) => {
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
                         {gender}
-                        {species}
-                        {results}
+                                {species}
+                                {results}
                         <View style={styles.closeButton}>
-                            <Icon raised reverse name='clear' color='#235E3E' size={20} onPress={() => {
+                            <Icon raised reverse name='clear' color='#54403E' size={20} onPress={() => {
                                 toggleOverlay(); resetQuestions()
                             }}/>
                         </View>
@@ -120,7 +144,7 @@ const styles = StyleSheet.create({
     },
     modalView: {
         margin: 20,
-        backgroundColor: "white",
+        backgroundColor: "#F7EDE1",
         borderRadius: 20,
         padding: 35,
         alignItems: "center",
@@ -132,11 +156,50 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
-        position: 'relative'
+        position: 'relative',
+        maxHeight: 380,
+        minWidth: 290,
     },
     closeButton: {
         position: 'absolute',
         top: -20,
-        left: -20
+        left: -20,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+    },
+    questionText: {
+        fontSize: 20,
+        color: "#54403E",
+        fontWeight: "bold",
+        textAlign: "center",
+        marginBottom: 16
+    },
+    genderImg: {
+        width: 70,
+        height: 70,
+        alignSelf: "center",
+        marginTop: 5,
+    },
+    questionOptions: {
+        flexDirection: "row",
+        justifyContent: "space-around",
+        marginTop: 12
+    },
+    questionOption: {
+        width: 110,
+        height: 110,
+    },
+    questionOptionsLabel: {
+        textAlign: "center",
+        fontSize: 16,
+        color: "#54403E",
+        fontWeight: "bold",
+    },
+    speciesContainer: {
     }
 });
