@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Modal, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { Button, Icon, Divider } from 'react-native-elements';
-import { getSpeciesList, getVillagers } from "../Data/fetchData";
-import { GENDER } from "../Constants/constants";
+import { getVillagers } from "../Data/fetchData";
+import { GENDER, SPECIES_IMG } from "../Constants/constants";
 import { storeVillager } from "../Data/storage";
 
 export const AddVillager = (props) => {
@@ -63,10 +63,10 @@ export const AddVillager = (props) => {
         setShowResults(true);
     };
 
-    const speciesButtons = getSpeciesList().map(species => (
-        <TouchableOpacity onPress={() => setSpecies(species)} key={species}>
-            <Image source={require(`../Images/Species/Cat.png`)} style={styles.genderImg}/>
-            <Text style={styles.questionOptionsLabel}>{species}</Text>
+    const speciesButtons = SPECIES_IMG.map(villager => (
+        <TouchableOpacity onPress={() => setSpecies(villager.species)} key={villager.species}>
+            <Image source={villager.file} style={styles.genderImg}/>
+            <Text style={styles.questionOptionsLabel}>{villager.species}</Text>
         </TouchableOpacity>
     ));
 
@@ -74,7 +74,7 @@ export const AddVillager = (props) => {
         <View>
             <Text style={styles.questionText}>Select a Species</Text>
             <Divider style={{ backgroundColor: '#E6D2C1', height: 3 }} />
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView>
                 {speciesButtons}
             </ScrollView>
         </View>
@@ -93,15 +93,19 @@ export const AddVillager = (props) => {
     };
 
     const villagerButtons = finalResults ? (finalResults.map(villager => (
-        <Button key={villager.id} title={villager.name["name-USen"]} type="clear" onPress={() => setVillager(villager)}/>
+        <TouchableOpacity onPress={() => setVillager(villager)} key={villager.id}>
+            <Image source={{uri: villager["icon_uri"]}} style={styles.genderImg}/>
+            <Text style={styles.questionOptionsLabel}>{villager.name["name-USen"]}</Text>
+        </TouchableOpacity>
     ))) : <Text/>;
 
     const results = showResults ? (
         <View>
             <Text style={styles.questionText}>Select a Villager</Text>
-            <View style={styles.speciesContainer}>
+            <Divider style={{ backgroundColor: '#E6D2C1', height: 3 }} />
+            <ScrollView>
                 {villagerButtons}
-            </View>
+            </ScrollView>
         </View>
     ) : <View/>;
 
@@ -116,8 +120,8 @@ export const AddVillager = (props) => {
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
                         {gender}
-                                {species}
-                                {results}
+                        {species}
+                        {results}
                         <View style={styles.closeButton}>
                             <Icon raised reverse name='clear' color='#54403E' size={20} onPress={() => {
                                 toggleOverlay(); resetQuestions()
@@ -157,7 +161,7 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
         elevation: 5,
         position: 'relative',
-        maxHeight: 380,
+        maxHeight: 400,
         minWidth: 290,
     },
     closeButton: {
