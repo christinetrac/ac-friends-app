@@ -25,7 +25,7 @@ export const VillagerDisplay = () => {
     ) : <Text/>;
 
     return (
-        <View>
+        <View style={styles.container}>
             <Text>
                 {displayVillager}
             </Text>
@@ -39,5 +39,6 @@ const styles = StyleSheet.create({
         color: '#FF0000',
         alignItems: 'center',
         justifyContent: 'center',
+        top: 50
     },
 });

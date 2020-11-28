@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { Button, Overlay, Icon } from 'react-native-elements';
+import { StyleSheet, Text, View, TouchableHighlight, Modal } from 'react-native';
+import { Button, Icon } from 'react-native-elements';
 import { getSpeciesList, getVillagers } from "../Data/fetchData";
 import { GENDER } from "../Constants/constants";
 import { storeVillager } from "../Data/storage";
@@ -34,13 +34,13 @@ export const AddVillager = (props) => {
         setSelectSpecies(true);
     };
 
-    const gender = selectGender && (
-        <Text style={styles.container}>
-            Is your villager a girl or boy?
+    const gender = selectGender ? (
+        <View>
+            <Text>Is your villager a girl or boy?</Text>
             <Button title="Girl" type="clear" onPress={() => setGender(GENDER.female)}/>
             <Button title="Boy" type="clear" onPress={() => setGender(GENDER.male)}/>
-        </Text>
-    );
+        </View>
+    ) : <View/>;
 
     const setSpecies = (species) => {
         setVillagerSpecies(species);
@@ -53,12 +53,12 @@ export const AddVillager = (props) => {
         <Button key={species} title={species} type="clear" onPress={() => setSpecies(species)}/>
     ));
 
-    const species = selectSpecies && (
-        <Text style={styles.container}>
-            What is the species of your villager?
+    const species = selectSpecies ? (
+        <Text>
+            <Text>What is the species of your villager?</Text>
             {speciesButtons}
         </Text>
-    );
+    ) : <View/>;
 
     const setVillager = (villager) => {
         const newVillager = {id: villager.id, name: villager.name["name-USen"],
@@ -70,41 +70,73 @@ export const AddVillager = (props) => {
         resetQuestions();
     };
 
-    const villagerButtons = finalResults && (finalResults.map(villager => (
+    const villagerButtons = finalResults ? (finalResults.map(villager => (
         <Button key={villager.id} title={villager.name["name-USen"]} type="clear" onPress={() => setVillager(villager)}/>
-    )));
+    ))) : <Text/>;
 
-    const results = showResults && (
-        <Text style={styles.container}>
-            Which one is your villager?
+    const results = showResults ? (
+        <View>
+            <Text>Which one is your villager?</Text>
             {villagerButtons}
-        </Text>
-    );
+        </View>
+    ) : <View/>;
 
     return (
-        <View>
-            <Icon raised name='add' color='#9ae3b4' style={styles.addButton} onPress={toggleOverlay} />
-            <Overlay isVisible={visible} onBackdropPress={() => {toggleOverlay(); resetQuestions()}}>
-                <Text style={styles.container}>
-                    {gender}
-                    {species}
-                    {results}
-                </Text>
-            </Overlay>
+        <View style={styles.centeredView}>
+            <Modal animationType="slide"
+                   transparent={true}
+                   visible={visible}
+                   onRequestClose={() => {
+                       toggleOverlay(); resetQuestions()
+                   }}>
+                <View style={styles.centeredView}>
+                    <View style={styles.modalView}>
+                        {gender}
+                        {species}
+                        {results}
+                        <View style={styles.closeButton}>
+                            <Icon raised reverse name='clear' color='#235E3E' size={20} onPress={() => {
+                                toggleOverlay(); resetQuestions()
+                            }}/>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
+            <Icon raised name='add' color='#9ae3b4' style={styles.addButton} onPress={toggleOverlay}/>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: 300,
-        height: 600
-    },
     addButton: {
         position: 'absolute',
         zIndex: 1,
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22
+    },
+    modalView: {
+        margin: 20,
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+        position: 'relative'
+    },
+    closeButton: {
+        position: 'absolute',
+        top: -20,
+        left: -20
     }
 });
