@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Modal, Image, TouchableOpacity, ScrollView } from 'react-native';
-import { Button, Icon, Divider } from 'react-native-elements';
+import { Icon, Divider } from 'react-native-elements';
 import { getVillagers } from "../Data/fetchData";
 import { GENDER, SPECIES_IMG } from "../Constants/constants";
 import { storeVillager } from "../Data/storage";
@@ -64,7 +64,7 @@ export const AddVillager = (props) => {
     };
 
     const speciesButtons = SPECIES_IMG.map(villager => (
-        <TouchableOpacity onPress={() => setSpecies(villager.species)} key={villager.species}>
+        <TouchableOpacity onPress={() => setSpecies(villager.species)} key={villager.species} style={{ marginBottom: 3}}>
             <Image source={villager.file} style={styles.genderImg}/>
             <Text style={styles.questionOptionsLabel}>{villager.species}</Text>
         </TouchableOpacity>
@@ -74,7 +74,7 @@ export const AddVillager = (props) => {
         <View>
             <Text style={styles.questionText}>Select a Species</Text>
             <Divider style={{ backgroundColor: '#E6D2C1', height: 3 }} />
-            <ScrollView>
+            <ScrollView style={{ width: 200}}>
                 {speciesButtons}
             </ScrollView>
         </View>
@@ -93,7 +93,7 @@ export const AddVillager = (props) => {
     };
 
     const villagerButtons = finalResults ? (finalResults.map(villager => (
-        <TouchableOpacity onPress={() => setVillager(villager)} key={villager.id}>
+        <TouchableOpacity onPress={() => setVillager(villager)} key={villager.id} style={{ marginBottom: 3}}>
             <Image source={{uri: villager["icon_uri"]}} style={styles.genderImg}/>
             <Text style={styles.questionOptionsLabel}>{villager.name["name-USen"]}</Text>
         </TouchableOpacity>
@@ -103,7 +103,7 @@ export const AddVillager = (props) => {
         <View>
             <Text style={styles.questionText}>Select a Villager</Text>
             <Divider style={{ backgroundColor: '#E6D2C1', height: 3 }} />
-            <ScrollView>
+            <ScrollView style={{ width: 200}}>
                 {villagerButtons}
             </ScrollView>
         </View>
@@ -203,7 +203,5 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: "#54403E",
         fontWeight: "bold",
-    },
-    speciesContainer: {
     }
 });
