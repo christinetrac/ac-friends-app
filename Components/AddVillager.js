@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Modal, Image, TouchableOpacity, ScrollView } from 'react-native';
-import { Icon, Divider } from 'react-native-elements';
+import {StyleSheet, Text, View, Modal, Image, TouchableOpacity, ScrollView, StatusBar} from 'react-native';
+import { Icon, Divider, Overlay } from 'react-native-elements';
 import { getVillagers } from "../Data/fetchData";
 import { GENDER, SPECIES_IMG } from "../Constants/constants";
 import { storeVillager } from "../Data/storage";
@@ -36,18 +36,17 @@ export const AddVillager = (props) => {
         setSelectSpecies(true);
     };
 
-    const girl = "girl";
     const gender = selectGender ? (
         <View>
             <Text style={styles.questionText}>Select a Gender</Text>
             <Divider style={{ backgroundColor: '#E6D2C1', height: 3 }} />
             <View style={styles.questionOptions}>
                 <TouchableOpacity style={styles.questionOption} onPress={() => setGender(GENDER.female)}>
-                    <Image source={require(`../Images/Gender/${girl}.png`)} style={styles.genderImg}/>
+                    <Image source={require(`../Images/Gender/girl.png`)} style={styles.villagerImg}/>
                     <Text style={styles.questionOptionsLabel}>Girl</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.questionOption} onPress={() => setGender(GENDER.male)}>
-                    <Image source={require('../Images/Gender/boy.png')} style={styles.genderImg}/>
+                    <Image source={require('../Images/Gender/boy.png')} style={styles.villagerImg}/>
                     <Text style={styles.questionOptionsLabel}>Boy</Text>
                 </TouchableOpacity>
             </View>
@@ -65,7 +64,7 @@ export const AddVillager = (props) => {
 
     const speciesButtons = SPECIES_IMG.map(villager => (
         <TouchableOpacity onPress={() => setSpecies(villager.species)} key={villager.species} style={{ marginBottom: 3}}>
-            <Image source={villager.file} style={styles.genderImg}/>
+            <Image source={villager.file} style={styles.villagerImg}/>
             <Text style={styles.questionOptionsLabel}>{villager.species}</Text>
         </TouchableOpacity>
     ));
@@ -94,7 +93,7 @@ export const AddVillager = (props) => {
 
     const villagerButtons = finalResults ? (finalResults.map(villager => (
         <TouchableOpacity onPress={() => setVillager(villager)} key={villager.id} style={{ marginBottom: 3}}>
-            <Image source={{uri: villager["icon_uri"]}} style={styles.genderImg}/>
+            <Image source={{uri: villager["icon_uri"]}} style={styles.villagerImg}/>
             <Text style={styles.questionOptionsLabel}>{villager.name["name-USen"]}</Text>
         </TouchableOpacity>
     ))) : <Text/>;
@@ -111,10 +110,12 @@ export const AddVillager = (props) => {
 
     return (
         <View style={styles.centeredView}>
-            <Modal animationType="slide"
+            <Overlay animationType="fade"
                    transparent={true}
-                   visible={visible}
-                   onRequestClose={() => {
+                   isVisible={visible}
+                   fullScreen={true}
+                   overlayStyle={{backgroundColor: 'rgba(0, 0, 0, 0.4)'}}
+                   onClose={() => {
                        toggleOverlay(); resetQuestions()
                    }}>
                 <View style={styles.centeredView}>
@@ -129,16 +130,29 @@ export const AddVillager = (props) => {
                         </View>
                     </View>
                 </View>
-            </Modal>
-            <Icon raised name='add' color='#9ae3b4' style={styles.addButton} onPress={toggleOverlay}/>
+            </Overlay>
+            <View style={styles.addButtonContainer}>
+                <Icon raised reverse name='add' color='#54403E' style={styles.addButton} onPress={toggleOverlay}/>
+            </View>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
     addButton: {
-        position: 'absolute',
         zIndex: 1,
+        flex: 1,
+        alignSelf: 'flex-end',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+    },
+    addButtonContainer: {
+        marginBottom: StatusBar.currentHeight + 200,
     },
     centeredView: {
         flex: 1,
@@ -183,7 +197,7 @@ const styles = StyleSheet.create({
         textAlign: "center",
         marginBottom: 16
     },
-    genderImg: {
+    villagerImg: {
         width: 70,
         height: 70,
         alignSelf: "center",

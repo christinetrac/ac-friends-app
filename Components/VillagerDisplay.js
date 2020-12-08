@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import { getStoredVillagers } from "../Data/storage";
+import { Divider } from "react-native-elements";
 
-export const VillagerDisplay = () => {
+export const VillagerDisplay = (props) => {
     const [villagerList, setVillagerList] = useState("");
 
     function fetchStoredVillagers() {
@@ -12,33 +13,61 @@ export const VillagerDisplay = () => {
     }
     useEffect(()=> {
         fetchStoredVillagers();
-    }, [villagerList]);
+    }, [props.villagerData]);
 
     const displayVillager = villagerList ? (
-        <View>
+        <View style={styles.parentList}>
             {villagerList.map(villager =>
-                <Text style={styles.container} key={villager.id}>
-                    {villager.name}
-                </Text>
+                <TouchableOpacity style={styles.listItem} key={villager.id}>
+                    <Image source={{uri: villager.icon}} style={styles.villagerImg}/>
+                    <Text style={styles.villagerName}>{villager.name}</Text>
+                </TouchableOpacity>
             )}
         </View>
     ) : <Text/>;
 
     return (
-        <View style={styles.container}>
-            <Text>
-                {displayVillager}
-            </Text>
+        <View>
+            <View>
+                <Text style={styles.listTitle}>Your Villagers</Text>
+                <Divider style={{ backgroundColor: '#E6D2C1', height: 3, alignSelf: 'stretch', marginLeft: 16, marginRight: 16 }} />
+                <ScrollView style={{width: '100%'}}>
+                    {displayVillager}
+                </ScrollView>
+            </View>
         </View>
     )
 };
 
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: '#fff',
-        color: '#FF0000',
-        alignItems: 'center',
-        justifyContent: 'center',
-        top: 50
+    listItem: {
+        flexBasis: '50%',
+        paddingBottom: 18,
+        paddingTop: 12
     },
+    parentList: {
+        flex: 1,
+        flexWrap: 'wrap',
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    listTitle: {
+        textAlign: "center",
+        fontSize: 20,
+        color: "#54403E",
+        fontWeight: "bold",
+        marginBottom: 16,
+    },
+    villagerImg: {
+        width: 100,
+        height: 100,
+        alignSelf: "center",
+        marginTop: 5,
+    },
+    villagerName: {
+        textAlign: "center",
+        fontSize: 16,
+        color: "#54403E",
+        fontWeight: "bold",
+    }
 });
