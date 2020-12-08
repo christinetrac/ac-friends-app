@@ -17,7 +17,7 @@ export default function App() {
   });
 
   return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: "#9ae3b4" }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: "#93CEAC" }}>
         <View style={styles.container}>
           <Text style={styles.dateText}>{new Date().toDateString()}</Text>
           <View style={styles.listContainer}>
@@ -32,7 +32,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#9ae3b4',
+    backgroundColor: '#93CEAC',
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
     height: Dimensions.get('window').height - 100,
     padding: 14,
     paddingTop: 24,
+    paddingBottom: 32,
   },
   dateText: {
     textAlign: 'left',

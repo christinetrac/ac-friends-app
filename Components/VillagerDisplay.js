@@ -26,11 +26,19 @@ export const VillagerDisplay = (props) => {
         </View>
     ) : <Text/>;
 
+    const divider = villagerList ? (
+        <Divider style={{ backgroundColor: '#E6D2C1', height: 3, alignSelf: 'stretch', marginLeft: 16, marginRight: 16 }} />
+    ) : <Text/>;
+
+    const title = villagerList ? (
+        <Text style={styles.listTitle}>Your Villagers</Text>
+    ) : <Text style={styles.listTitle}>Add Your Villagers!</Text>;
+
     return (
         <View>
             <View>
-                <Text style={styles.listTitle}>Your Villagers</Text>
-                <Divider style={{ backgroundColor: '#E6D2C1', height: 3, alignSelf: 'stretch', marginLeft: 16, marginRight: 16 }} />
+                {title}
+                {divider}
                 <ScrollView style={{width: '100%'}}>
                     {displayVillager}
                 </ScrollView>
