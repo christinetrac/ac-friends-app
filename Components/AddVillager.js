@@ -132,7 +132,7 @@ export const AddVillager = (props) => {
                 </View>
             </Overlay>
             <View style={styles.addButtonContainer}>
-                <Icon raised reverse name='add' color='#54403E' style={styles.addButton} onPress={toggleOverlay}/>
+                <Icon raised reverse name='add' color='#2BB674' style={styles.addButton} onPress={toggleOverlay}/>
             </View>
         </View>
     );
@@ -142,17 +142,16 @@ const styles = StyleSheet.create({
     addButton: {
         zIndex: 1,
         flex: 1,
-        alignSelf: 'flex-end',
+        alignSelf: 'flex-end'
+    },
+    addButtonContainer: {
+        marginBottom: 30,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
-            height: 2
+            height: 4
         },
         shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-    },
-    addButtonContainer: {
-        marginBottom: StatusBar.currentHeight + 200,
     },
     centeredView: {
         flex: 1,
