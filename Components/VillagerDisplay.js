@@ -41,7 +41,7 @@ export const VillagerDisplay = (props) => {
 
     return (
         <View>
-            <View style={{flexDirection: 'row', flexWrap: 'wrap', paddingTop:18}}>
+            <View style={{flexDirection: 'row', flexWrap: 'wrap', alignSelf:'center', paddingTop:18}}>
                 <Image source={require('../assets/leaf.png')} style={styles.leaf}/>
                 <Text style={styles.dateText}>{getDate()}</Text>
             </View>
@@ -111,11 +111,19 @@ const styles = StyleSheet.create({
         height: 100,
         alignSelf: "center",
         marginTop: 5,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: 0.25,
     },
     villagerName: {
         textAlign: "center",
-        fontSize: 16,
-        color: "#54403E",
-        fontWeight: "bold",
+        fontSize: 10,
+        color: "#786951",
+        fontWeight: "500",
+        textTransform: 'uppercase',
+        letterSpacing: 0.8
     }
 });
