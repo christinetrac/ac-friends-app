@@ -38,7 +38,7 @@ export const Dashboard = ({navigation}) => {
                 <View style={styles.addButtonContainer}>
                     <Icon raised reverse name='add' color='#2BB674' onPress={() => navigation.navigate('SelectGender', {villagerData:villagerData})}/>
                 </View>
-                <View style={{flexDirection: 'row', flexWrap: 'wrap', alignSelf:'left', position:'absolute', top:65, left:30}}>
+                <View style={{flexDirection: 'row', flexWrap: 'wrap', alignSelf:'left', position:'absolute', top:65, left:40}}>
                     <Image source={require('../assets/leaf.png')} style={styles.leaf}/>
                     <Text style={styles.dateText}>{getDate()}</Text>
                 </View>
@@ -47,7 +47,7 @@ export const Dashboard = ({navigation}) => {
                     <VillagerDisplay villagerData={villagerData} navigation={navigation}/>
                 </View>
                 <View style={{position:'absolute', bottom:30, alignSelf:'center'}}>
-                    <Icon name='help' color='#786951'/>
+                    <Icon name='help' color='#786951' onPress={() => navigation.navigate('NeedHelp')}/>
                     <Text style={styles.help}>Need Help?</Text>
                 </View>
             </ImageBackground>
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         width:266,
         position:'absolute',
-        left:30,
+        left:40,
         top:98
     },
     help: {

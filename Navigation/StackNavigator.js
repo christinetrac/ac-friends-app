@@ -2,12 +2,16 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Dashboard } from '../Screens/Dashboard';
 import { VillagerDisplay } from "../Components/VillagerDisplay";
+
 import { SelectGender } from "../Screens/SelectGender";
 import { SelectSpecies } from "../Screens/SelectSpecies"
 import { SelectVillager } from "../Screens/SelectVilager";
 import { AddNewVillager } from "../Screens/AddNewVillager";
+
 import { Profile } from "../Screens/Profile";
 import { Delete } from "../Screens/Delete";
+
+import { NeedHelp } from "../Screens/NeedHelp";
 
 const Stack = createStackNavigator();
 
@@ -82,6 +86,16 @@ const StackNavigator = (props) => {
                               gesturesEnabled: false
                           }}/>
             <Stack.Screen name="Delete" component={Delete}
+                          initialParams={{data: props.data}}
+                          options={{
+                              title: null,
+                              headerStyle: {
+                                  height: 0
+                              },
+                              headerLeft: null,
+                              gesturesEnabled: false
+                          }}/>
+            <Stack.Screen name="NeedHelp" component={NeedHelp}
                           initialParams={{data: props.data}}
                           options={{
                               title: null,
