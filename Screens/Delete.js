@@ -18,9 +18,6 @@ export const Delete = ({navigation, route}) => {
                 <TouchableOpacity style={styles.button}>
                     <Text style={styles.buttonText}>yes</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button}>
-                    <Text style={styles.buttonText}>no</Text>
-                </TouchableOpacity>
             </View>
         </View>
     );
@@ -64,12 +61,6 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         position:'absolute'
     },
-    buttonGroup: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        width: 235,
-        alignSelf: 'center',
-    },
     buttonText: {
         color:'#fff',
         textTransform: 'uppercase',
@@ -90,6 +81,7 @@ const styles = StyleSheet.create({
         top: 320,
         borderRadius: 25,
         backgroundColor: '#2BB674',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        alignSelf: 'center'
     }
 });

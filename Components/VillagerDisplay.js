@@ -15,7 +15,7 @@ export const VillagerDisplay = ({navigation}, props) => {
     }
     useEffect(()=> {
         fetchStoredVillagers();
-    }, [props.villagerData]);
+    }, [villagerList]);
 
     const visitProfile = (villager) => {
         navigation.navigate('Profile', {villager:villager})
@@ -48,7 +48,7 @@ export const VillagerDisplay = ({navigation}, props) => {
     return (
         <View>
             {empty}
-            <ScrollView style={{width: '100%'}}>
+            <ScrollView style={{width: '100%'}} showsVerticalScrollIndicator={false}>
                 {displayVillager}
             </ScrollView>
         </View>

@@ -7,7 +7,6 @@ import {Header2} from "../Components/Header2";
 
 export const AddNewVillager = ({navigation, route}) => {
     const villager = route?.params?.villager;
-    console.log(villager);
 
     const addVillager = (villager) => {
         const newVillager = {

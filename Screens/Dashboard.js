@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, SafeAreaView, ImageBackground} from 'react-native';
+import {StyleSheet, Text, View, Image, TouchableOpacity, ImageBackground} from 'react-native';
 import { Icon } from "react-native-elements";
 import {VillagerDisplay} from "../Components/VillagerDisplay";
 import {Header1} from "../Components/Header1";
@@ -46,7 +46,7 @@ export const Dashboard = ({navigation}) => {
                 <View style={styles.listContainer}>
                     <VillagerDisplay villagerData={villagerData} navigation={navigation}/>
                 </View>
-                <View style={{position:'absolute', bottom:30, alignSelf:'center'}}>
+                <View style={{position:'absolute', bottom:50, alignSelf:'center'}}>
                     <Icon name='help' color='#786951' onPress={() => navigation.navigate('NeedHelp')}/>
                     <Text style={styles.help}>Need Help?</Text>
                 </View>
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         width: 400,
-        height: 620,
+        height: 615,
         paddingBottom: 32,
         top:178,
     },
