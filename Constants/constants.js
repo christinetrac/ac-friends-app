@@ -3,6 +3,12 @@ const GENDER = {
     male: 'Male'
 };
 
+const STATUS = {
+    friends: 'Friend',
+    goodFriends: 'Buddy',
+    bestFriends: 'Bffs'
+};
+
 const SPECIES = {
     alligator: 'Alligator',
     anteater: 'Anteater',
@@ -184,4 +190,4 @@ const SPECIES_IMG = [
     }
 ];
 
-export { GENDER, SPECIES, SPECIES_IMG };
+export { GENDER, STATUS, SPECIES, SPECIES_IMG };

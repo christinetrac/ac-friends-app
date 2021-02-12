@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, SafeAreaView, ImageBackground} from 'react-native';
 import {Icon} from "react-native-elements";
 import {GENDER} from "../Constants/constants";
+import {Header2} from "../Components/Header2";
 
 export const SelectGender = ({navigation, route}) => {
     const villagerData = route?.params?.villagerData;
@@ -12,6 +13,7 @@ export const SelectGender = ({navigation, route}) => {
 
     return (
         <View style={styles.container}>
+            <Header2/>
             <View style={styles.backButtonContainer}>
                 <Icon raised reverse name='arrow-back' color='#2BB674' onPress={() => {navigation.pop()}}/>
             </View>
@@ -32,7 +34,7 @@ export const SelectGender = ({navigation, route}) => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#F7EDE1',
+        backgroundColor: '#FEF6EC',
         flex: 1,
     },
     backButtonContainer: {

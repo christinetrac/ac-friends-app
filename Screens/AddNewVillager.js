@@ -2,17 +2,21 @@ import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View, Image, TouchableOpacity, ScrollView} from 'react-native';
 import {Icon} from "react-native-elements";
 import {storeVillager} from "../Data/storage";
+import {STATUS} from "../Constants/constants";
+import {Header2} from "../Components/Header2";
 
 export const AddNewVillager = ({navigation, route}) => {
     const villager = route?.params?.villager;
     console.log(villager);
 
     const addVillager = (villager) => {
-        const newVillager = {id: villager.id, name: villager.name["name-USen"],
+        const newVillager = {
+            id: villager.id, name: villager.name["name-USen"],
             gender: villager.gender, species: villager.species,
-            image: villager["image_uri"], icon: villager["icon_uri"],
+            hobby: villager.hobby, icon: villager["icon_uri"],
             colour: villager["bubble-color"], birthday: villager["birthday-string"],
-            level: 1, points:25
+            gavePicture: false, pictureDate: null,
+            level: 1, points:25, status: STATUS.friends
         };
         storeVillager(newVillager).then();
         navigation.navigate('Dashboard');
@@ -20,6 +24,7 @@ export const AddNewVillager = ({navigation, route}) => {
 
     return (
         <View style={styles.container}>
+            <Header2/>
             <View style={styles.backButtonContainer}>
                 <Icon raised reverse name='arrow-back' color='#2BB674' onPress={() => {navigation.pop()}}/>
             </View>
@@ -42,7 +47,7 @@ export const AddNewVillager = ({navigation, route}) => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#F7EDE1',
+        backgroundColor: '#FEF6EC',
         flex: 1,
     },
     backButtonContainer: {

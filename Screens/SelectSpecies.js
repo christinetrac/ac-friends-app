@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet, Text, View, Image, TouchableOpacity, ScrollView} from 'react-native';
 import {Icon} from "react-native-elements";
 import {SPECIES_IMG} from "../Constants/constants";
+import {Header2} from "../Components/Header2";
 
 export const SelectSpecies = ({navigation, route}) => {
     const villagerData = route?.params?.villagerData;
@@ -31,10 +32,7 @@ export const SelectSpecies = ({navigation, route}) => {
         });
         content.push(
             <View style={styles.questionOptions}>
-                <TouchableOpacity onPress={() => setSpecies(SPECIES_IMG[SPECIES_IMG.length-1].species)} key={SPECIES_IMG[SPECIES_IMG.length-1].species} style={{ marginBottom: 20}}>
-                    <Image source={SPECIES_IMG[SPECIES_IMG.length-1].file} style={styles.villagerImg}/>
-                    <Text style={styles.questionOptionsLabel}>{SPECIES_IMG[SPECIES_IMG.length-1].species}</Text>
-                </TouchableOpacity>
+                {columns}
             </View>
         );
         return content;
@@ -42,6 +40,7 @@ export const SelectSpecies = ({navigation, route}) => {
 
     return (
       <View style={styles.container}>
+          <Header2/>
           <View style={styles.backButtonContainer}>
               <Icon raised reverse name='arrow-back' color='#2BB674' onPress={() => {navigation.pop()}}/>
           </View>
@@ -55,7 +54,7 @@ export const SelectSpecies = ({navigation, route}) => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#F7EDE1',
+        backgroundColor: '#FEF6EC',
         flex: 1,
     },
     backButtonContainer: {

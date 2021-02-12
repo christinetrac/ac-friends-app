@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View, Image, TouchableOpacity, ScrollView} from 'react-native';
 import {Icon} from "react-native-elements";
 import { getVillagers } from "../Data/fetchData";
+import {Header2} from "../Components/Header2";
+import {SPECIES_IMG} from "../Constants/constants";
 
 export const SelectVillager = ({navigation, route}) => {
     const villagerData = route?.params?.villagerData;
@@ -35,11 +37,13 @@ export const SelectVillager = ({navigation, route}) => {
                 columns = [];
             }
         });
+        content.push(<View style={styles.questionOptions}>{columns}</View>);
         return content;
     }
 
     return (
         <View style={styles.container}>
+            <Header2/>
             <View style={styles.backButtonContainer}>
                 <Icon raised reverse name='arrow-back' color='#2BB674' onPress={() => {navigation.pop()}}/>
             </View>
@@ -53,7 +57,7 @@ export const SelectVillager = ({navigation, route}) => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#F7EDE1',
+        backgroundColor: '#FEF6EC',
         flex: 1,
     },
     backButtonContainer: {

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, SafeAreaView, ImageBackground} from 'react-native';
 import { Icon } from "react-native-elements";
 import {VillagerDisplay} from "../Components/VillagerDisplay";
+import {Header1} from "../Components/Header1";
 
 export const Dashboard = ({navigation}) => {
     const [villagerData, setVillagerData] = useState([]);
@@ -17,18 +18,37 @@ export const Dashboard = ({navigation}) => {
         fetchVillagersData();
     });
 
+    function getDate() {
+        const date = new Date();
+        const year = date.getFullYear();
+        const day = date.getDate();
+        const options = { month: "short" };
+        const month = new Intl.DateTimeFormat("en-US", options).format(date);
+        return month + ' ' + day + ', ' + year;
+    }
+
     return(
         <View style={styles.container}>
             <ImageBackground
                 source={require("../assets/leafPattern.png")}
                 style={{width: "100%", height: "100%"}}
-                imageStyle={{opacity:0.3}}
+                imageStyle={{opacity:0.25}}
             >
+                <Header1/>
+                <View style={styles.addButtonContainer}>
+                    <Icon raised reverse name='add' color='#2BB674' onPress={() => navigation.navigate('SelectGender', {villagerData:villagerData})}/>
+                </View>
+                <View style={{flexDirection: 'row', flexWrap: 'wrap', alignSelf:'left', position:'absolute', top:65, left:30}}>
+                    <Image source={require('../assets/leaf.png')} style={styles.leaf}/>
+                    <Text style={styles.dateText}>{getDate()}</Text>
+                </View>
+                <Text style={styles.greeting}>Welcome back, Island Dweller.</Text>
                 <View style={styles.listContainer}>
                     <VillagerDisplay villagerData={villagerData}/>
                 </View>
-                <View style={styles.addButtonContainer}>
-                    <Icon raised reverse name='add' color='#2BB674' onPress={() => navigation.navigate('SelectGender', {villagerData:villagerData})}/>
+                <View style={{position:'absolute', bottom:30, alignSelf:'center'}}>
+                    <Icon name='help' color='#786951'/>
+                    <Text style={styles.help}>Need Help?</Text>
                 </View>
             </ImageBackground>
         </View>
@@ -41,20 +61,12 @@ const styles = StyleSheet.create({
     },
     listContainer: {
         alignSelf: 'center',
-        marginTop: 60,
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 50,
-        backgroundColor: '#fff',
-        width: 350,
-        height: 720,
+        width: 400,
+        height: 620,
         paddingBottom: 32,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 4,
-        },
-        shadowOpacity: 0.25,
+        top:178,
     },
     addButtonContainer: {
         shadowColor: "#000",
@@ -63,9 +75,44 @@ const styles = StyleSheet.create({
             height: 4
         },
         shadowOpacity: 0.25,
-        bottom:30,
+        right:22,
+        top:112,
         position:'absolute',
-        alignSelf: 'center'
     },
+    dateText: {
+        color: '#2BB674',
+        fontSize: 15,
+        fontWeight: '500',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        marginLeft: 12,
+        marginTop:4,
+    },
+    leaf: {
+        width: 24,
+        height: 22,
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+    },
+    greeting: {
+        color: '#786951',
+        fontSize: 28,
+        fontWeight: '600',
+        width:266,
+        position:'absolute',
+        left:30,
+        top:98
+    },
+    help: {
+        color: '#786951',
+        fontSize: 10,
+        fontWeight: '500',
+        textAlign: 'center',
+        paddingTop: 2
+    }
 });
 

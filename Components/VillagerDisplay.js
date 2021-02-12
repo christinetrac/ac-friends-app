@@ -1,7 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import { getStoredVillagers } from "../Data/storage";
-import { Divider } from "react-native-elements";
+import {Icon} from "react-native-elements";
+import { LevelTag } from '../Components/LevelTag';
+import { StatusTag } from "./StatusTag";
 
 export const VillagerDisplay = (props) => {
     const [villagerList, setVillagerList] = useState("");
@@ -21,6 +23,15 @@ export const VillagerDisplay = (props) => {
                 <TouchableOpacity style={styles.listItem} key={villager.id}>
                     <Image source={{uri: villager.icon}} style={styles.villagerImg}/>
                     <Text style={styles.villagerName}>{villager.name}</Text>
+                    <View style={styles.levelTag}>
+                        <LevelTag level={villager.level}/>
+                    </View>
+                    <View style={styles.statusTag}>
+                        <StatusTag status={villager.status}/>
+                    </View>
+                    <View style={styles.arrow}>
+                        <Icon name='keyboard-arrow-right' color='#8ECFCA' size={40}/>
+                    </View>
                 </TouchableOpacity>
             )}
         </View>
@@ -30,22 +41,8 @@ export const VillagerDisplay = (props) => {
         <Text style={styles.empty}>press the + button to add your villagers!</Text>
     ) : <Text/>;
 
-    function getDate() {
-        const date = new Date();
-        const year = date.getFullYear();
-        const day = date.getDate();
-        const options = { month: "short" };
-        const month = new Intl.DateTimeFormat("en-US", options).format(date);
-        return month + ' ' + day + ', ' + year;
-    }
-
     return (
         <View>
-            <View style={{flexDirection: 'row', flexWrap: 'wrap', alignSelf:'center', paddingTop:18}}>
-                <Image source={require('../assets/leaf.png')} style={styles.leaf}/>
-                <Text style={styles.dateText}>{getDate()}</Text>
-            </View>
-            <Divider style={styles.divider}/>
             {empty}
             <ScrollView style={{width: '100%'}}>
                 {displayVillager}
@@ -55,34 +52,6 @@ export const VillagerDisplay = (props) => {
 };
 
 const styles = StyleSheet.create({
-    dateText: {
-        color: '#235E3E',
-        fontSize: 24,
-        fontWeight: '500',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        marginTop: 8,
-        marginLeft: 8,
-    },
-    leaf: {
-        width: 42,
-        height: 38,
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-    },
-    divider: {
-        backgroundColor: '#CEECCC',
-        height: 5,
-        width:268,
-        position: 'absolute',
-        alignSelf: 'center',
-        borderRadius:5,
-        top:70
-    },
     empty: {
         position: 'absolute',
         color: '#C7B2A0',
@@ -96,20 +65,29 @@ const styles = StyleSheet.create({
         letterSpacing: 0.8,
     },
     listItem: {
-        flexBasis: '50%',
         paddingBottom: 18,
-        paddingTop: 12
+        paddingTop: 12,
+        width:350,
+        height:100,
+        backgroundColor:'#fff',
+        borderRadius:22,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: 0.25,
+        alignSelf:'center',
+        marginBottom:12
     },
     parentList: {
-        flex: 1,
-        flexWrap: 'wrap',
-        flexDirection: 'row',
-        justifyContent: 'space-between'
+        alignSelf: "center",
+        paddingTop:10,
+        width:360
     },
     villagerImg: {
-        width: 100,
-        height: 100,
-        alignSelf: "center",
+        width: 75,
+        height: 75,
         marginTop: 5,
         shadowColor: "#000",
         shadowOffset: {
@@ -117,13 +95,31 @@ const styles = StyleSheet.create({
             height: 4,
         },
         shadowOpacity: 0.25,
+        position:'absolute',
+        top:8,
+        left:20
     },
     villagerName: {
-        textAlign: "center",
-        fontSize: 10,
-        color: "#786951",
+        textAlign: "left",
+        fontSize: 24,
+        color: "#235E3E",
         fontWeight: "500",
-        textTransform: 'uppercase',
-        letterSpacing: 0.8
+        left:120,
+        top:12
+    },
+    levelTag: {
+        position:'absolute',
+        left:120,
+        top:60
+    },
+    statusTag: {
+        position:'absolute',
+        left:204,
+        top:60
+    },
+    arrow: {
+        position:'absolute',
+        right:17,
+        top:30
     }
 });
