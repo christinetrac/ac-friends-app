@@ -44,7 +44,7 @@ export const Dashboard = ({navigation}) => {
                 </View>
                 <Text style={styles.greeting}>Welcome back, Island Dweller.</Text>
                 <View style={styles.listContainer}>
-                    <VillagerDisplay villagerData={villagerData}/>
+                    <VillagerDisplay villagerData={villagerData} navigation={navigation}/>
                 </View>
                 <View style={{position:'absolute', bottom:30, alignSelf:'center'}}>
                     <Icon name='help' color='#786951'/>

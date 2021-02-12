@@ -1,26 +1,10 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View, Image, TouchableOpacity, ScrollView} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {Icon} from "react-native-elements";
-import {storeVillager} from "../Data/storage";
-import {STATUS} from "../Constants/constants";
 import {Header2} from "../Components/Header2";
+import React from "react";
 
-export const AddNewVillager = ({navigation, route}) => {
+export const Delete = ({navigation, route}) => {
     const villager = route?.params?.villager;
-    console.log(villager);
-
-    const addVillager = (villager) => {
-        const newVillager = {
-            id: villager.id, name: villager.name["name-USen"],
-            gender: villager.gender, species: villager.species,
-            hobby: villager.hobby, icon: villager["icon_uri"],
-            colour: villager["bubble-color"], birthday: villager["birthday-string"],
-            gavePicture: false, pictureDate: null, personality: villager.personality,
-            level: 1, points:25, status: STATUS.friends
-        };
-        storeVillager(newVillager).then();
-        navigation.navigate('Dashboard');
-    };
 
     return (
         <View style={styles.container}>
@@ -28,13 +12,10 @@ export const AddNewVillager = ({navigation, route}) => {
             <View style={styles.backButtonContainer}>
                 <Icon raised reverse name='arrow-back' color='#2BB674' onPress={() => {navigation.pop()}}/>
             </View>
-            <Text style={styles.title}>Is This Villager New?</Text>
-            <Text style={styles.subtitle}>
-                they have just moved in or you have not interacted with them yet
-            </Text>
-            <Image source={{uri: villager["icon_uri"]}} style={styles.villagerImg}/>
+            <Text style={styles.title}>Are you sure you want to delete <Text style={{color: '#EF758A'}}>{villager.name}</Text>?</Text>
+            <Text style={styles.subtitle}>you cannot undo this action</Text>
             <View style={styles.buttonGroup}>
-                <TouchableOpacity style={styles.button} onPress={() => addVillager(villager)}>
+                <TouchableOpacity style={styles.button}>
                     <Text style={styles.buttonText}>yes</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.button}>
@@ -63,12 +44,13 @@ const styles = StyleSheet.create({
         left:30,
     },
     title: {
-        textAlign: 'center',
+        fontSize:24,
+        fontWeight:'500',
+        textAlign:'center',
+        color:'#786951',
+        width:310,
         alignSelf: 'center',
-        top:235,
-        color: '#235E3E',
-        fontSize: 24,
-        fontWeight: '500',
+        top:260
     },
     subtitle: {
         textAlign: "center",
@@ -77,21 +59,10 @@ const styles = StyleSheet.create({
         fontWeight: "500",
         textTransform: 'uppercase',
         letterSpacing: 0.8,
-        top:250,
+        top:324,
         width:273,
-        alignSelf: 'center'
-    },
-    villagerImg: {
-        width: 100,
-        height: 100,
-        alignSelf: "center",
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 4,
-        },
-        shadowOpacity: 0.25,
-        top: 290
+        alignSelf: 'center',
+        position:'absolute'
     },
     buttonGroup: {
         flexDirection: "row",
@@ -116,7 +87,7 @@ const styles = StyleSheet.create({
             height: 4,
         },
         shadowOpacity: 0.25,
-        top: 330,
+        top: 320,
         borderRadius: 25,
         backgroundColor: '#2BB674',
         justifyContent: 'center'

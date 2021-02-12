@@ -6,7 +6,7 @@ const GENDER = {
 const STATUS = {
     friends: 'Friend',
     goodFriends: 'Buddy',
-    bestFriends: 'Bffs'
+    bestFriends: 'Bff'
 };
 
 const SPECIES = {

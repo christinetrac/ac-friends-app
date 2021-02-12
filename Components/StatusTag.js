@@ -21,10 +21,10 @@ const styles = StyleSheet.create({
         color:'#786951',
         textAlign:'center',
         paddingLeft: 3,
-        paddingTop:3
+        paddingTop:4
     },
     heart: {
-        paddingTop:3
+        paddingTop:4
     }
 });
 

@@ -5,7 +5,7 @@ import {Icon} from "react-native-elements";
 import { LevelTag } from '../Components/LevelTag';
 import { StatusTag } from "./StatusTag";
 
-export const VillagerDisplay = (props) => {
+export const VillagerDisplay = ({navigation}, props) => {
     const [villagerList, setVillagerList] = useState("");
 
     function fetchStoredVillagers() {
@@ -17,10 +17,14 @@ export const VillagerDisplay = (props) => {
         fetchStoredVillagers();
     }, [props.villagerData]);
 
+    const visitProfile = (villager) => {
+        navigation.navigate('Profile', {villager:villager})
+    };
+
     const displayVillager = villagerList ? (
         <View style={styles.parentList}>
             {villagerList.map(villager =>
-                <TouchableOpacity style={styles.listItem} key={villager.id}>
+                <TouchableOpacity onPress={() => visitProfile(villager)} style={styles.listItem} key={villager.id}>
                     <Image source={{uri: villager.icon}} style={styles.villagerImg}/>
                     <Text style={styles.villagerName}>{villager.name}</Text>
                     <View style={styles.levelTag}>

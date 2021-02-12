@@ -3,7 +3,6 @@ import {StyleSheet, Text, View, Image, TouchableOpacity, ScrollView} from 'react
 import {Icon} from "react-native-elements";
 import { getVillagers } from "../Data/fetchData";
 import {Header2} from "../Components/Header2";
-import {SPECIES_IMG} from "../Constants/constants";
 
 export const SelectVillager = ({navigation, route}) => {
     const villagerData = route?.params?.villagerData;
