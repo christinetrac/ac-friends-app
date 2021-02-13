@@ -16,7 +16,7 @@ export const SelectSpecies = ({navigation, route}) => {
         let content = [], columns = [];
         SPECIES_IMG.forEach((villager, i) => {
             columns.push(
-                <TouchableOpacity onPress={() => setSpecies(villager.species)} key={villager.species} style={{ marginBottom: 20}}>
+                <TouchableOpacity onPress={() => setSpecies(villager.species)} key={villager.file} style={{ marginBottom: 20}}>
                     <Image source={villager.file} style={styles.villagerImg}/>
                     <Text style={styles.questionOptionsLabel}>{villager.species}</Text>
                 </TouchableOpacity>

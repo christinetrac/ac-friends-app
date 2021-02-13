@@ -7,6 +7,8 @@ import { SelectGender } from "../Screens/SelectGender";
 import { SelectSpecies } from "../Screens/SelectSpecies"
 import { SelectVillager } from "../Screens/SelectVilager";
 import { AddNewVillager } from "../Screens/AddNewVillager";
+import { OldVillagerForm } from "../Screens/OldVillagerForm";
+import { AddOldVillager } from "../Screens/AddOldVillager";
 
 import { Profile } from "../Screens/Profile";
 import { Delete } from "../Screens/Delete";
@@ -66,6 +68,26 @@ const StackNavigator = (props) => {
                               gesturesEnabled: false
                           }}/>
             <Stack.Screen name="AddNewVillager" component={AddNewVillager}
+                          initialParams={{data: props.data}}
+                          options={{
+                              title: null,
+                              headerStyle: {
+                                  height: 0
+                              },
+                              headerLeft: null,
+                              gesturesEnabled: false
+                          }}/>
+            <Stack.Screen name="OldVillagerForm" component={OldVillagerForm}
+                          initialParams={{data: props.data}}
+                          options={{
+                              title: null,
+                              headerStyle: {
+                                  height: 0
+                              },
+                              headerLeft: null,
+                              gesturesEnabled: false
+                          }}/>
+            <Stack.Screen name="AddOldVillager" component={AddOldVillager}
                           initialParams={{data: props.data}}
                           options={{
                               title: null,

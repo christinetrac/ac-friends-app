@@ -22,7 +22,7 @@ export const SelectVillager = ({navigation, route}) => {
         let content = [], columns = [];
         results.forEach((villager, i) => {
             columns.push(
-                <TouchableOpacity onPress={() => setVillager(villager)} key={villager.id} style={{ marginBottom: 20}}>
+                <TouchableOpacity onPress={() => setVillager(villager)} key={villager.id} style={{ marginBottom: 20 }}>
                     <Image source={{uri: villager["icon_uri"]}} style={styles.villagerImg}/>
                     <Text style={styles.questionOptionsLabel}>{villager.name["name-USen"]}</Text>
                 </TouchableOpacity>
@@ -106,6 +106,6 @@ const styles = StyleSheet.create({
         color: "#786951",
         fontWeight: "500",
         textTransform: 'uppercase',
-        letterSpacing: 0.8
+        letterSpacing: 0.8,
     }
 });

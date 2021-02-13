@@ -1,28 +1,27 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
+import React from 'react';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {Icon} from "react-native-elements";
 import {storeVillager} from "../Data/storage";
-import {STATUS} from "../Constants/constants";
 import {Header2} from "../Components/Header2";
+import {getVillagerStatus} from "../Data/fetchData";
 
-export const AddNewVillager = ({navigation, route}) => {
+export const AddOldVillager = ({navigation, route}) => {
     const villager = route?.params?.villager;
+    const level = route?.params?.level;
+    const points = route?.params?.points;
+    const status = getVillagerStatus(level);
 
-    const addVillager = (villager) => {
+    const addVillager = () => {
         const newVillager = {
             id: villager.id, name: villager.name["name-USen"],
             gender: villager.gender, species: villager.species,
             hobby: villager.hobby, icon: villager["icon_uri"],
             colour: villager["bubble-color"], birthday: villager["birthday-string"],
             gavePicture: false, pictureDate: null, personality: villager.personality,
-            level: 1, points:25, status: STATUS.friends
+            level: level, points: points, status: status
         };
         storeVillager(newVillager).then();
         navigation.navigate('Dashboard');
-    };
-
-    const oldVillagerForm = (villager) => {
-        navigation.navigate('OldVillagerForm', {villager:villager});
     };
 
     return (
@@ -31,19 +30,16 @@ export const AddNewVillager = ({navigation, route}) => {
             <View style={styles.backButtonContainer}>
                 <Icon raised reverse name='arrow-back' color='#2BB674' onPress={() => {navigation.pop()}}/>
             </View>
-            <Text style={styles.title}>Is This Villager New?</Text>
-            <Text style={styles.subtitle}>
-                they have just moved in or you have not interacted with them yet
-            </Text>
-            <Image source={{uri: villager["icon_uri"]}} style={styles.villagerImg}/>
-            <View style={styles.buttonGroup}>
-                <TouchableOpacity style={styles.button} onPress={() => addVillager(villager)}>
-                    <Text style={styles.buttonText}>yes</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={() => oldVillagerForm(villager)}>
-                    <Text style={styles.buttonText}>no</Text>
-                </TouchableOpacity>
+            <View style={styles.titleBox}>
+                <Text style={[styles.title, {paddingBottom:40}]}>Based on our calculations...</Text>
+                <Text style={[styles.title, {paddingBottom:40}]}>You and {villager.name["name-USen"]} are at friendship<Text style={{color:'#EF758A'}}> level {level}</Text></Text>
+                <Text style={styles.title}>This means {villager.name["name-USen"]} considers you as a<Text style={{color:'#EF758A'}}> {status}</Text> <View>
+                    <Icon name='favorite' size={21} color='#EF758A'/>
+                </View></Text>
             </View>
+            <TouchableOpacity style={styles.button} onPress={() => addVillager()}>
+                <Text style={styles.buttonText}>save</Text>
+            </TouchableOpacity>
         </View>
     );
 };
@@ -66,41 +62,20 @@ const styles = StyleSheet.create({
         left:30,
     },
     title: {
-        textAlign: 'center',
+        textAlign: 'left',
         alignSelf: 'center',
-        top:235,
         color: '#235E3E',
         fontSize: 24,
         fontWeight: '500',
+        width:310
     },
-    subtitle: {
-        textAlign: "center",
-        fontSize: 10,
-        color: "#786951",
-        fontWeight: "500",
-        textTransform: 'uppercase',
-        letterSpacing: 0.8,
-        top:250,
-        width:273,
-        alignSelf: 'center'
-    },
-    villagerImg: {
-        width: 100,
-        height: 100,
-        alignSelf: "center",
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 4,
-        },
-        shadowOpacity: 0.25,
-        top: 290
-    },
-    buttonGroup: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        width: 235,
+    titleBox: {
         alignSelf: 'center',
+        position:'absolute',
+        top:247
+    },
+    heart: {
+        marginTop:6
     },
     buttonText: {
         color:'#fff',
@@ -119,9 +94,11 @@ const styles = StyleSheet.create({
             height: 4,
         },
         shadowOpacity: 0.25,
-        top: 330,
         borderRadius: 25,
         backgroundColor: '#2BB674',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        alignSelf:'center',
+        position:'absolute',
+        top:600
     }
 });
