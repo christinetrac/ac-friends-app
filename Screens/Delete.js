@@ -2,9 +2,15 @@ import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {Icon} from "react-native-elements";
 import {Header2} from "../Components/Header2";
 import React from "react";
+import { clearVillager } from "../Data/storage";
 
 export const Delete = ({navigation, route}) => {
     const villager = route?.params?.villager;
+
+    const deleteVillager = (villager) => {
+        clearVillager(villager).then();
+        navigation.navigate('Dashboard');
+    };
 
     return (
         <View style={styles.container}>
@@ -15,7 +21,7 @@ export const Delete = ({navigation, route}) => {
             <Text style={styles.title}>Are you sure you want to delete <Text style={{color: '#EF758A'}}>{villager.name}</Text>?</Text>
             <Text style={styles.subtitle}>you cannot undo this action</Text>
             <View style={styles.buttonGroup}>
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={() => deleteVillager(villager)}>
                     <Text style={styles.buttonText}>yes</Text>
                 </TouchableOpacity>
             </View>

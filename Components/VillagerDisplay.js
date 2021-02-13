@@ -11,7 +11,8 @@ export const VillagerDisplay = ({navigation}, props) => {
     function fetchStoredVillagers() {
         getStoredVillagers()
             .then((response) => setVillagerList(response))
-            .catch((error) => console.error(error))
+            .catch((error) => console.error(error));
+        return villagerList;
     }
     useEffect(()=> {
         fetchStoredVillagers();
@@ -20,7 +21,6 @@ export const VillagerDisplay = ({navigation}, props) => {
     const visitProfile = (villager) => {
         navigation.navigate('Profile', {villager:villager})
     };
-
     const displayVillager = villagerList ? (
         <View style={styles.parentList}>
             {villagerList.map(villager =>

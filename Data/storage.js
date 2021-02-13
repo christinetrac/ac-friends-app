@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useState } from 'react';
 
 const clearStorage = async () => {
     try {
@@ -12,30 +13,40 @@ const clearStorage = async () => {
 const storeVillager = async (villager) => {
     try {
         let storedVillagers = await AsyncStorage.getItem('@storage_Key');
-        JSON.parse(storedVillagers);
         if(!storedVillagers) {
             storedVillagers = [villager];
         } else {
-            storedVillagers = [...JSON.parse(storedVillagers), villager];
+            storedVillagers = JSON.parse(storedVillagers);
+            storedVillagers = [...storedVillagers, villager];
         }
         await AsyncStorage.setItem('@storage_Key', JSON.stringify(storedVillagers));
     } catch(e) {
-        alert('Failed to store the villager.');
+        alert(e);
     }
 };
 
 const getStoredVillagers = async () => {
     try {
-        const storedVillagers = await AsyncStorage.getItem('@storage_Key');
-        if(!storedVillagers) return null;
-        return JSON.parse(storedVillagers);
+        let storedVillagers = await AsyncStorage.getItem('@storage_Key');
+        if(!storedVillagers) return [];
+        storedVillagers = JSON.parse(storedVillagers);
+        return storedVillagers;
     } catch(e) {
-        alert('Failed to read the villager.');
+        alert(e);
     }
 };
 
-const clearVillager = async () => {
-
+const clearVillager = async (villager) => {
+    try {
+        let storedVillagers = await AsyncStorage.getItem('@storage_Key');
+        storedVillagers = JSON.parse(storedVillagers);
+        storedVillagers = storedVillagers.filter(obj => {
+            return (obj.id !== villager.id)
+        });
+        await AsyncStorage.setItem('@storage_Key', JSON.stringify(storedVillagers));
+    } catch(e) {
+        alert(e);
+    }
 };
 
 export { clearStorage, storeVillager, getStoredVillagers, clearVillager };
