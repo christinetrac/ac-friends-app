@@ -12,6 +12,7 @@ import { AddOldVillager } from "../Screens/AddOldVillager";
 
 import { Profile } from "../Screens/Profile";
 import { Delete } from "../Screens/Delete";
+import { FramedPicture } from "../Screens/FramedPicture";
 
 import { NeedHelp } from "../Screens/NeedHelp";
 
@@ -108,6 +109,16 @@ const StackNavigator = (props) => {
                               gesturesEnabled: false
                           }}/>
             <Stack.Screen name="Delete" component={Delete}
+                          initialParams={{data: props.data}}
+                          options={{
+                              title: null,
+                              headerStyle: {
+                                  height: 0
+                              },
+                              headerLeft: null,
+                              gesturesEnabled: false
+                          }}/>
+            <Stack.Screen name="FramedPicture" component={FramedPicture}
                           initialParams={{data: props.data}}
                           options={{
                               title: null,

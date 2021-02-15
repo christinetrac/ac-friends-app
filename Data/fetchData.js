@@ -13,6 +13,16 @@ export function getVillagerStatus(level){
     else return STATUS.bestFriends;
 }
 
+export function getPronoun1(gender) {
+    if(gender === 'Male') return 'his';
+    else return 'her'
+}
+
+export function getPronoun2(gender) {
+    if(gender === 'Male') return 'him';
+    else return 'her'
+}
+
 export function getSpeciesList() {
     return Object.values(SPECIES);
 }

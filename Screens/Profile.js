@@ -1,26 +1,26 @@
 import {StyleSheet, Text, View, Image, TouchableOpacity, ScrollView} from 'react-native';
 import {Icon, Divider} from "react-native-elements";
 import {Header2} from "../Components/Header2";
+import {getPronoun1} from "../Data/fetchData";
 import React from "react";
 
 export const Profile = ({navigation, route}) => {
     const villager = route?.params?.villager;
 
-    const pronoun = () => {
-        if(villager.gender === 'Male') return 'his';
-        else return 'her'
-    };
-
     const star = () => {
         if(villager.gavePicture) {
-            return <Icon name='star' color='#F5C24A' size={50}/>
+            return <Icon name='star' color='#F5C24A' size={50} onPress={() => visitFramedPicture()}/>
         } else {
-            return <Icon name='star-border' color='#F5C24A' size={50}/>
+            return <Icon name='star-border' color='#F5C24A' size={50} onPress={() => visitFramedPicture()}/>
         }
     };
 
     const visitDelete = () => {
-        navigation.navigate('Delete', {villager:villager})
+        navigation.navigate('Delete', {villager:villager});
+    };
+
+    const visitFramedPicture = () => {
+        navigation.navigate('FramedPicture', {villager:villager});
     };
 
     return (
@@ -35,7 +35,7 @@ export const Profile = ({navigation, route}) => {
             <View style={[styles.circle, {borderColor:villager.colour}]}>
                 <Image source={{uri: villager.icon}} style={styles.villagerImg}/>
             </View>
-            <Text style={styles.title}>{villager.name} thinks of you as {pronoun()} <Text style={{color: '#EF758A', textTransform:'lowercase'}}>{villager.status}</Text></Text>
+            <Text style={styles.title}>{villager.name} thinks of you as {getPronoun1(villager.gender)} <Text style={{color: '#EF758A', textTransform:'lowercase'}}>{villager.status}</Text></Text>
             <View style={styles.star}>
                 {star()}
             </View>
