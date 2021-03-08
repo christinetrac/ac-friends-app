@@ -4,4 +4,4 @@
 
 ### View my progress here: https://christine-trac.me/projectpages/ac.html
 
-![ac gif](https://christine-trac.me/projectpages/ac.gif)
+<img src="https://christine-trac.me/projectpages/ac.gif" width="300">
