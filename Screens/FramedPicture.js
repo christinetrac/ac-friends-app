@@ -1,12 +1,48 @@
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {CheckBox, Icon} from "react-native-elements";
 import {Header2} from "../Components/Header2";
-import {getPronoun2} from "../Data/fetchData";
+import {getPronoun2, getDate} from "../Data/fetchData";
+import {updateVillagerPicture} from "../Data/storage";
 import React, {useState} from "react";
 
 export const FramedPicture = ({navigation, route}) => {
     const villager = route?.params?.villager;
     const [received, setReceived] = useState(false);
+
+    const save = () => {
+        if(received) {
+            updateVillagerPicture(villager).then();
+            navigation.navigate('Dashboard');
+        }
+    };
+
+    const page = !villager.gavePicture ? (
+        <View style={{flex:1}}>
+         <Text style={[styles.title, {paddingBottom:60}]}>{villager.name} has not gifted you a
+             <Text style={{color: '#EF758A'}}> framed picture</Text> of {getPronoun2(villager.gender)}self</Text>
+         <Text style={styles.title}>You can expect to receive one at
+             <Text style={{color: '#EF758A'}}> level 5</Text> or <Text style={{color: '#EF758A'}}>level 6</Text></Text>
+         <Text style={styles.question}>Have you received it?</Text>
+         <CheckBox checked={received}
+                   onPress={() => setReceived(!received)}
+                   textStyle={styles.questionText}
+                   containerStyle={styles.questionBox}
+                   checkedColor={'#786951'}
+                   uncheckedColor={'#786951'}
+                   title={'yes i finally received a framed picture!'}
+         />
+         <TouchableOpacity style={styles.button} onPress={() => save()}>
+             <Text style={styles.buttonText}>save</Text>
+         </TouchableOpacity>
+        </View>
+        ):(
+        <View style={{flex:1}}>
+         <Text style={[styles.title, {paddingBottom:60}]}>Hooray!</Text>
+         <Text style={[styles.title, {paddingBottom:60}]}>{villager.name} already gifted you a framed picture of {getPronoun2(villager.gender)}self on<Text style={{color: '#EF758A'}}> {getDate(Date.parse(villager.pictureDate))}</Text></Text>
+         <Text style={styles.title}>You have achieved the greatest gift of this friendship</Text>
+         <View style={styles.heart}><Icon name='favorite' size={50} color='#EF758A'/></View>
+        </View>
+    );
 
     return (
         <View style={styles.container}>
@@ -14,22 +50,7 @@ export const FramedPicture = ({navigation, route}) => {
             <View style={styles.backButtonContainer}>
                 <Icon raised reverse name='arrow-back' color='#2BB674' onPress={() => {navigation.pop()}}/>
             </View>
-            <Text style={[styles.title, {paddingBottom:40}]}>{villager.name} has not gifted you a
-                <Text style={{color: '#EF758A'}}> framed picture</Text> of {getPronoun2(villager.gender)}self</Text>
-            <Text style={styles.title}>You can expect to receive one at
-                <Text style={{color: '#EF758A'}}> level 5</Text> or <Text style={{color: '#EF758A'}}>level 6</Text></Text>
-            <Text style={styles.question}>Have you received it?</Text>
-            <CheckBox checked={received}
-                      onPress={() => setReceived(!received)}
-                      textStyle={styles.questionText}
-                      containerStyle={styles.questionBox}
-                      checkedColor={'#786951'}
-                      uncheckedColor={'#786951'}
-                      title={'yes i finally received a framed picture!'}
-            />
-            <TouchableOpacity style={styles.button}>
-                <Text style={styles.buttonText}>save</Text>
-            </TouchableOpacity>
+            {page}
         </View>
     );
 };
@@ -50,6 +71,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top:60,
         left:30,
+        zIndex:99
     },
     title: {
         fontSize:24,
@@ -109,5 +131,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignSelf: 'center',
         position:'absolute'
+    },
+    heart: {
+        bottom:255,
+        position:'absolute',
+        alignSelf:'center'
     }
 });

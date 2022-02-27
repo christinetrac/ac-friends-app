@@ -3,6 +3,7 @@ import {StyleSheet, Text, View, Image, TouchableOpacity, ImageBackground} from '
 import { Icon } from "react-native-elements";
 import {VillagerDisplay} from "../Components/VillagerDisplay";
 import {Header1} from "../Components/Header1";
+import {getDate} from "../Data/fetchData";
 
 export const Dashboard = ({navigation}) => {
     const [villagerData, setVillagerData] = useState([]);
@@ -18,15 +19,6 @@ export const Dashboard = ({navigation}) => {
         fetchVillagersData();
     });
 
-    function getDate() {
-        const date = new Date();
-        const year = date.getFullYear();
-        const day = date.getDate();
-        const options = { month: "short" };
-        const month = new Intl.DateTimeFormat("en-US", options).format(date);
-        return month + ' ' + day + ', ' + year;
-    }
-
     return(
         <View style={styles.container}>
             <ImageBackground
@@ -40,7 +32,7 @@ export const Dashboard = ({navigation}) => {
                 </View>
                 <View style={{flexDirection: 'row', flexWrap: 'wrap', alignSelf:'left', position:'absolute', top:65, left:40}}>
                     <Image source={require('../assets/leaf.png')} style={styles.leaf}/>
-                    <Text style={styles.dateText}>{getDate()}</Text>
+                    <Text style={styles.dateText}>{getDate(new Date())}</Text>
                 </View>
                 <Text style={styles.greeting}>Welcome back, Island Dweller.</Text>
                 <View style={styles.listContainer}>

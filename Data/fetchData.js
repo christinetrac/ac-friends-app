@@ -19,8 +19,16 @@ export function getPronoun1(gender) {
 }
 
 export function getPronoun2(gender) {
-    if(gender === 'Male') return 'him';
+    if (gender === 'Male') return 'him';
     else return 'her'
+}
+
+export function getDate(date) {
+    const year = date.getFullYear();
+    const day = date.getDate();
+    const options = { month: "short" };
+    const month = new Intl.DateTimeFormat("en-US", options).format(date);
+    return month + ' ' + day + ', ' + year;
 }
 
 export function getSpeciesList() {

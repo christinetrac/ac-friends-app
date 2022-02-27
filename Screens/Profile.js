@@ -6,6 +6,8 @@ import React from "react";
 
 export const Profile = ({navigation, route}) => {
     const villager = route?.params?.villager;
+    console.log(villager);
+    console.log(typeof villager.pictureDate);
 
     const star = () => {
         if(villager.gavePicture) {

@@ -49,4 +49,20 @@ const clearVillager = async (villager) => {
     }
 };
 
-export { clearStorage, storeVillager, getStoredVillagers, clearVillager };
+const updateVillagerPicture = async (villager) => {
+    try {
+        let storedVillagers = await AsyncStorage.getItem('@storage_Key');
+        storedVillagers = JSON.parse(storedVillagers);
+        storedVillagers.forEach(v => {
+            if(v.id === villager.id) {
+                v.gavePicture = true;
+                v.pictureDate = new Date();
+            }
+        });
+        await AsyncStorage.setItem('@storage_Key', JSON.stringify(storedVillagers));
+    } catch(e) {
+        alert(e);
+    }
+};
+
+export { clearStorage, storeVillager, getStoredVillagers, clearVillager, updateVillagerPicture };
